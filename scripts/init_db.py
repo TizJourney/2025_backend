@@ -31,6 +31,6 @@ def run():
 
     bulk_data = [Citate(**prepare_citate(row)) for row in data]
     citate_items = Citate.objects.bulk_create(
-        bulk_data, batch_size=None, ignore_conflicts=True)
+        bulk_data, batch_size=100, ignore_conflicts=True)
     print(f'Inserted {len(citate_items)} citates')    
 
