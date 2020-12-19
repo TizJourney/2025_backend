@@ -49,7 +49,7 @@ class Citate(models.Model):
     poem = models.ForeignKey(
         Poem, blank=True, null=True,
         on_delete=models.CASCADE,
-        verbose_name='Цитата',
+        verbose_name='Произведение',
         related_name='citate')
 
     class Meta:
