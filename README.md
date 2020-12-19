@@ -5,5 +5,5 @@
 
 Скрипт для инициализации базы
 ```
-./manage.py shell < ./scripts/init_db.py
+python manage.py runscript init_db
 ```
