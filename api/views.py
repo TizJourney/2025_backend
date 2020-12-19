@@ -116,7 +116,4 @@ def init(request):
     citate_items = Citate.objects.bulk_create(
         bulk_data, batch_size=None, ignore_conflicts=True)
 
-    items = []
-
-
     return response.Response(f'Создано {len(items)} записей и {len(citate_items)} цитат', status=status.HTTP_200_OK)
