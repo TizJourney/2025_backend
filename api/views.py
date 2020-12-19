@@ -4,11 +4,12 @@ from rest_framework.decorators import api_view
 from pymystem3 import Mystem
 import re
 import pandas as pd
+import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer
 import nltk
 from sklearn.metrics.pairwise import cosine_similarity
 
-import sys
+from .models import Poem
 
 
 nltk.download('stopwords')
@@ -81,3 +82,21 @@ def verify(request):
     })
     output_data.is_valid(raise_exception=True)
     return response.Response(output_data.data, status=status.HTTP_200_OK)
+
+@api_view(('GET',))
+def init(request):
+    csv_text_data = pd.read_csv('./data/poem.csv')
+    created_count = 0
+    checked_count = 0
+    data = csv_text_data.to_dict(orient='records')
+
+    def cleaned_row(row):
+        cleaned = row
+        cleaned['date_to'] = int(row['date_to']) if not np.isnan(row['date_to']) else None
+        cleaned['date_from'] = int(row['date_from']) if not np.isnan(row['date_from']) else None
+        return cleaned
+
+    bulk_data = [Poem(**cleaned_row(row)) for row in data]
+    items = Poem.objects.bulk_create(bulk_data, batch_size=None, ignore_conflicts=True)
+
+    return response.Response(f'Создано {len(items)} записей', status=status.HTTP_200_OK)
