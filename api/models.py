@@ -12,6 +12,8 @@ class Poem(models.Model):
         db_index=True, max_length=200, verbose_name='Автор')
     date_from = models.IntegerField(
         db_index=True,
+        blank=True,
+        null=True,
         validators=(
             MinValueValidator(0),
             MaxValueValidator(
@@ -20,6 +22,8 @@ class Poem(models.Model):
         verbose_name='Дата начала')
     date_to = models.IntegerField(
         db_index=True,
+        blank=True,
+        null=True,
         validators=(
             MinValueValidator(0),
             MaxValueValidator(
