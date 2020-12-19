@@ -1,7 +1,7 @@
 from rest_framework import (decorators, response, serializers, status)
 from .serializers import VerifyOutputSerializer
 
-@decorators.api_view(['POST'])
+@decorators.api_view(['GET'])
 def verify(request):
     print("Здеся")
 
