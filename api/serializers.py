@@ -8,7 +8,7 @@ class VerifyInputSerializer(serializers.Serializer):
     данных на цитаты классика
     """
 
-    query = serializers.CharField(default='Нужно было ввести query параметр с цитатой')
+    query = serializers.CharField()
 
 
 class VerifyOutputSerializer(serializers.Serializer):
@@ -18,4 +18,5 @@ class VerifyOutputSerializer(serializers.Serializer):
     """
 
     query = serializers.CharField()
+    converted_query = serializers.CharField()
     score = serializers.IntegerField(default=0, min_value=0, max_value=100)
