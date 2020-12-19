@@ -23,7 +23,8 @@ class QueryConverter:
         self.tf_idf = TfidfVectorizer(stop_words=stop_words)
 
         self.tf_idf_data = self.tf_idf.fit_transform(
-            self.citate_corpus['lemmed_line'])
+            self.citate_corpus['lemmed_line']
+        )
 
     def lemmatize(self, text):
         lemm_list = self.stemmer.lemmatize(text)
@@ -36,17 +37,21 @@ class QueryConverter:
 
     def query_transform(self, text):
         lemmed_text = self.lemmatize(self.clean(text))
+        print(lemmed_text)
         vectorized_text = self.tf_idf.transform([lemmed_text])
         return vectorized_text
 
-    def find_similar(self, text):
+    def find_similar(self, text, number=10):
         vectorized_text = self.query_transform(text)
+        print(vectorized_text)
         cosine_similarities = cosine_similarity(
             vectorized_text,  self.tf_idf_data).flatten()
-        related_product_indices = cosine_similarities.argsort()[:-4:-1]
+        related_product_indices = cosine_similarities.argsort()[:-number:-1]
         return [
             {
-                'citate': self.citate_corpus.loc[index]['line'],
+                'citate': self.citate_corpus.iloc[index]['line'],
+                'author': self.citate_corpus.iloc[index]['author'],
+                'title': self.citate_corpus.iloc[index]['name'],
                 'score':  int(cosine_similarities[index]*100)
             }
             for index in related_product_indices
@@ -63,7 +68,8 @@ def verify(request):
     input_data.is_valid(raise_exception=True)
 
     query = input_data.validated_data['query']
-    similar_lines = convert_instance.find_similar(query)
+    citate_number = input_data.validated_data['number']
+    similar_lines = convert_instance.find_similar(query, citate_number)
 
     best_score = max(item['score'] for item in similar_lines) or 0
     output_data = VerifyOutputSerializer(data={
