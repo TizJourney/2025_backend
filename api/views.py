@@ -63,9 +63,7 @@ def verify(request):
     input_data.is_valid(raise_exception=True)
 
     query = input_data.validated_data['query']
-
     similar_lines = convert_instance.find_similar(query)
-
 
     best_score = max(item['score'] for item in similar_lines) or 0
     output_data = VerifyOutputSerializer(data={
@@ -74,7 +72,4 @@ def verify(request):
         'score': best_score,
     })
     output_data.is_valid(raise_exception=True)
-
-    print(output_data.data)
-
     return response.Response(output_data.data, status=status.HTTP_200_OK)
