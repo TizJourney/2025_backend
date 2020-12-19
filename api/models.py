@@ -7,9 +7,9 @@ from django.db import models
 
 class Poem(models.Model):
     name = models.CharField(
-        db_index=True, max_length=200, verbose_name='Название')
+        db_index=True, max_length=5000, verbose_name='Название')
     author = models.CharField(
-        db_index=True, max_length=200, verbose_name='Автор')
+        db_index=True, max_length=5000, verbose_name='Автор')
     date_from = models.IntegerField(
         db_index=True,
         blank=True,
@@ -43,9 +43,9 @@ class Poem(models.Model):
 
 
 class Citate(models.Model):
-    line = models.CharField(max_length=200, verbose_name='Цитата')
+    line = models.CharField(max_length=5000, verbose_name='Цитата')
     lemmed_line = models.CharField(
-        db_index=True, max_length=200, verbose_name='Леммизированная цитата')
+        db_index=True, max_length=5000, verbose_name='Леммизированная цитата')
     poem = models.ForeignKey(
         Poem, blank=True, null=True,
         on_delete=models.CASCADE,
