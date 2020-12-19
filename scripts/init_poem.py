@@ -17,20 +17,6 @@ def run():
     items = Poem.objects.bulk_create(
         bulk_data, batch_size=None, ignore_conflicts=True)
 
-    del csv_text_data
-    del data
     print(f'Inserted {len(items)} poems')
 
-    citate_text_data = pd.read_csv('./data/citate.csv')
-    data = citate_text_data.to_dict(orient='records')
-    def prepare_citate(row):
-        changed = row
-        changed['poem_id'] = row['poem']
-        del changed['poem']
-        return changed
-
-    bulk_data = [Citate(**prepare_citate(row)) for row in data]
-    citate_items = Citate.objects.bulk_create(
-        bulk_data, batch_size=100, ignore_conflicts=True)
-    print(f'Inserted {len(citate_items)} citates')    
 
