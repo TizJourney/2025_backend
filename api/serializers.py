@@ -10,6 +10,9 @@ class VerifyInputSerializer(serializers.Serializer):
 
     query = serializers.CharField()
 
+class CitateSerializer(serializers.Serializer):
+    citate = serializers.CharField()
+    score = serializers.IntegerField(default=0, min_value=0, max_value=100)
 
 class VerifyOutputSerializer(serializers.Serializer):
     """
@@ -18,5 +21,5 @@ class VerifyOutputSerializer(serializers.Serializer):
     """
 
     query = serializers.CharField()
-    converted_query = serializers.CharField()
+    similar = serializers.ListField(child=CitateSerializer())
     score = serializers.IntegerField(default=0, min_value=0, max_value=100)
