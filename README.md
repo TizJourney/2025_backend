@@ -5,5 +5,6 @@
 
 Скрипт для инициализации базы
 ```
-python manage.py runscript init_db
+python manage.py runscript init_poem
+python manage.py runscript init_citate
 ```
