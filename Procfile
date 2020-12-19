@@ -1,0 +1,1 @@
+web: gunicorn backend2025.wsgi
