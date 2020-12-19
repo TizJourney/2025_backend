@@ -38,5 +38,26 @@ class Poem(models.Model):
         verbose_name_plural = 'Произведения'
 
     def __str__(self):
-        title = f'author "{self.name}"'
+        title = f'{self.author} "{self.name}"'
         return title
+
+
+class Citate(models.Model):
+    line = models.CharField(max_length=200, verbose_name='Цитата')
+    lemmed_line = models.CharField(
+        db_index=True, max_length=200, verbose_name='Леммизированная цитата')
+    poem = models.ForeignKey(
+        Poem, blank=True, null=True,
+        on_delete=models.CASCADE,
+        verbose_name='Цитата',
+        related_name='citate')
+
+    class Meta:
+        verbose_name = 'Цитата'
+        verbose_name_plural = 'Цитаты'
+
+
+    def __str__(self):
+        return self.line[:20]
+
+
