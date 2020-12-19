@@ -8,6 +8,8 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 import nltk
 from sklearn.metrics.pairwise import cosine_similarity
 
+import sys
+
 
 nltk.download('stopwords')
 
@@ -43,7 +45,7 @@ class QueryConverter:
 
     def find_similar(self, text, number=10):
         vectorized_text = self.query_transform(text)
-        print(vectorized_text)
+
         cosine_similarities = cosine_similarity(
             vectorized_text,  self.tf_idf_data).flatten()
         related_product_indices = cosine_similarities.argsort()[:-number:-1]
