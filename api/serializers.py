@@ -1,9 +1,10 @@
 from django.core.validators import MaxValueValidator, MinValueValidator
 from rest_framework import serializers
 
+
 class VerifyOutputSerializer(serializers.Serializer):
     """
-    Сериализация для GET запроса для выдачи похожести
+    Сериализация для выходных данных GET запроса для выдачи похожести
     данных на цитаты классика
     """
 
