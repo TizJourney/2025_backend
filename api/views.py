@@ -37,6 +37,8 @@ class QueryConverter:
         candidate_objects = Citate.objects.prefetch_related('poem').filter(lemmed_line__icontains=start_of_text)
         self.tf_idf = TfidfVectorizer(stop_words=self.stop_words)
         lemmed_class_lines = [item.lemmed_line for item in candidate_objects]
+        if not lemmed_class_lines:
+            return []
 
         self.tf_idf_data = self.tf_idf.fit_transform(lemmed_class_lines)
 
